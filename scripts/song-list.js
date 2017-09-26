@@ -5,7 +5,13 @@ $(document).ready( function() {
         <td>${index+1}</td>
         <td>${song.title}</td>
         <td>$${song.duration}</td>
-      </tr>`);
+      </tr>
+    `);
+
+    song.element.click( event => {
+      player.playPause(song);
+    });
+
     $('#song-list').append(song.element);
   });
 });
