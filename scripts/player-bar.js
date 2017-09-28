@@ -19,4 +19,14 @@ $(document).ready( function() {
         album.songs[album.songs.indexOf(player.currentlyPlaying) + 1]
       );
   });
+
+  $('#time-control input').on('input', function(event) {
+    player.skipTo(event.target.value);
+  });
+
+  setInterval( () => {
+    $('#time-control .current-time').text(player.getTime());
+    $('#time-control input').val(100 * player.getTime() / player.getDuration());
+  }, 1000);
+
 });
