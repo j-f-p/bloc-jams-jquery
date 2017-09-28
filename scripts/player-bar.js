@@ -29,4 +29,8 @@ $(document).ready( function() {
     $('#time-control input').val(100 * player.getTime() / player.getDuration());
   }, 1000);
 
+  $('#volume-control input').on('input', function(event) {
+    player.setVolume(event.target.value);
+  });
+
 });
