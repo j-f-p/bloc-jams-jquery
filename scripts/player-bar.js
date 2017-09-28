@@ -26,7 +26,8 @@ $(document).ready( function() {
 
   setInterval( () => {
     $('#time-control .current-time').text(player.getTime());
-    $('#time-control input').val(100 * player.getTime() / player.getDuration());
+    $('#time-control input').val(
+      100 * player.getTimeSeconds() / player.getDurationSeconds());
   }, 1000);
 
   $('#volume-control input').on('input', function(event) {
