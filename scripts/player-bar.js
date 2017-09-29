@@ -11,13 +11,10 @@ $(document).ready( function() {
   });
 
   $('button#play-pause').click( function() {
-    //console.log(player.playState);
     player.playPause();
     $(this).attr('playState',player.playState);
 
-    //if(player.playState==='paused' || player.playState==='stopped')
     if(player.playState==='playing')
-//      $('#time-control .total-time').text(player.getDuration());
       player.waitForSong(
         () => $('#time-control .total-time').text(player.getDuration()) );
   });
@@ -37,7 +34,6 @@ $(document).ready( function() {
     player.skipTo(event.target.value);
   });
 
-  //window.myInterval =
   setInterval( () => {
     $('#time-control .current-time').text(player.getTime());
     $('#time-control input').val(
