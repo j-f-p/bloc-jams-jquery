@@ -7,6 +7,7 @@ class Player {
   }
 
   prettyTime(timeInSeconds) {
+    //console.log(timeInSeconds);
     if(timeInSeconds<10)
       return `0:0${Math.floor(timeInSeconds)}`;
     if(timeInSeconds<60)
@@ -35,8 +36,15 @@ class Player {
     return this.prettyTime( this.soundObject.getTime() );
   }
 
+  waitForSong(fn) {
+    this.soundObject.bind("loadeddata", fn);
+  }
+
   playPause (song = this.currentlyPlaying) {
-    if (this.currentlyPlaying !== song) {
+//    if (this.currentlyPlaying !== song) {
+    if (this.currentlyPlaying !== song || this.playState==='stopped') {
+// waitForSong works when playState is 'stopped' only when soundObject is
+// reloaded, thus, "|| this.playState==='stopped'" is included
       // Stop the currently playing sound file (even if nothing is playing)
       this.soundObject.stop();
       // Clear classes on the song that's currently playing
@@ -46,16 +54,16 @@ class Player {
       this.currentlyPlaying = song;
       this.playState = 'stopped';
       this.soundObject = new buzz.sound(this.currentlyPlaying.soundFileUrl);
-      $('#time-control .total-time').text(
-        this.prettyTime(this.currentlyPlaying.duration));
+      // console.log( "pre-loaded ", this.getDurationSeconds() );
+      // this.soundObject.bind("loadeddata", () => {
+      //   console.log( "loaded ", this.getDurationSeconds() );
+      // });
     }
     if (this.playState === 'paused' || this.playState === 'stopped') {
       this.soundObject.setVolume( this.volume );
       this.soundObject.play();
       this.playState = 'playing';
       this.currentlyPlaying.element.removeClass('paused').addClass('playing');
-      $('#time-control .total-time').text(
-        this.prettyTime(this.currentlyPlaying.duration));
     } else {
       this.soundObject.pause();
       this.playState = 'paused';

@@ -15,6 +15,9 @@ $(document).ready( function() {
     song.element.click( event => {
       player.playPause(song);
       $('button#play-pause').attr('playState',player.playState);
+      if(player.playState==='playing')
+        player.waitForSong(
+          () => $('#time-control .total-time').text(player.getDuration()) );
     });
 
     $('#song-list').append(song.element);
